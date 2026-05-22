@@ -1,0 +1,38 @@
+{
+  "$GMProject":"v1",
+  "%Name":"Soundness Abundant",
+  "AudioGroups":[
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+  "configs":{
+    "children":[],
+    "name":"Default",
+  },
+  "defaultScriptType":1,
+  "Folders":[],
+  "ForcedPrefabProjectReferences":[],
+  "IncludedFiles":[],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{
+    "IDEVersion":"2024.14.4.222",
+  },
+  "name":"Soundness Abundant",
+  "resources":[
+    {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
+    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"spr_fox_die","path":"sprites/spr_fox_die/spr_fox_die.yy",},},
+    {"id":{"name":"spr_fox_idle","path":"sprites/spr_fox_idle/spr_fox_idle.yy",},},
+    {"id":{"name":"spr_fox_jump","path":"sprites/spr_fox_jump/spr_fox_jump.yy",},},
+    {"id":{"name":"spr_fox_run","path":"sprites/spr_fox_run/spr_fox_run.yy",},},
+  ],
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[
+    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+  ],
+  "templateType":"game",
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+}
