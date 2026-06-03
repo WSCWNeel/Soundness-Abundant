@@ -23,7 +23,6 @@ if (_input_x != 0 || _input_y != 0) {
 
     var _move_dir = point_direction(0, 0, _input_x, _input_y);
 
-// Calculate precise speed vectors using the angle.
 // lengthdir_x/y checks _move_dir and move_speed and makes sure that move_speed cap is met by v_x and v_y.
 // (eg.: if _move_dir = 45° then lengthdir_x/y makes sure that x/y_distance = 2.82 pixels and -2.82 pixels.)
 
