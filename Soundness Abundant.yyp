@@ -26,6 +26,7 @@
     {"id":{"name":"spr_fox_idle","path":"sprites/spr_fox_idle/spr_fox_idle.yy",},},
     {"id":{"name":"spr_fox_jump","path":"sprites/spr_fox_jump/spr_fox_jump.yy",},},
     {"id":{"name":"spr_fox_run","path":"sprites/spr_fox_run/spr_fox_run.yy",},},
+    {"id":{"name":"spr_title_background","path":"sprites/spr_title_background/spr_title_background.yy",},},
     {"id":{"name":"background_tileset","path":"tilesets/background_tileset/background_tileset.yy",},},
   ],
   "resourceType":"GMProject",
