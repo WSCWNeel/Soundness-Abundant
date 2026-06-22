@@ -1,12 +1,12 @@
 {
   "$GMRoom":"v1",
-  "%Name":"Room1",
-  "creationCodeFile":"rooms/Room1/RoomCreationCode.gml",
+  "%Name":"room_home_screen",
+  "creationCodeFile":"rooms/room_home_screen/RoomCreationCode.gml",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_3556FB26","path":"rooms/Room1/Room1.yy",},
+    {"name":"inst_3556FB26","path":"rooms/room_home_screen/room_home_screen.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -113,7 +113,7 @@
         ],"TileDataFormat":1,},"tilesetId":{"name":"background_tileset","path":"tilesets/background_tileset/background_tileset.yy",},"userdefinedDepth":false,"visible":true,"x":0,"y":0,},
     {"$GMRBackgroundLayer":"","%Name":"Background","animationFPS":30.0,"animationSpeedType":0,"colour":4294967295,"depth":400,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"hspeed":0.0,"htiled":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Background","properties":[],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_title_background","path":"sprites/spr_title_background/spr_title_background.yy",},"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":true,"vspeed":0.0,"vtiled":false,"x":0,"y":0,},
   ],
-  "name":"Room1",
+  "name":"room_home_screen",
   "parent":{
     "name":"Soundness Abundant",
     "path":"Soundness Abundant.yyp",

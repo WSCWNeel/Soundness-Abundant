@@ -20,7 +20,8 @@
   "name":"Soundness Abundant",
   "resources":[
     {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"room_game_1","path":"rooms/room_game_1/room_game_1.yy",},},
+    {"id":{"name":"room_home_screen","path":"rooms/room_home_screen/room_home_screen.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
     {"id":{"name":"spr_fox_die","path":"sprites/spr_fox_die/spr_fox_die.yy",},},
     {"id":{"name":"spr_fox_idle","path":"sprites/spr_fox_idle/spr_fox_idle.yy",},},
@@ -32,7 +33,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"room_home_screen","path":"rooms/room_home_screen/room_home_screen.yy",},},
+    {"roomId":{"name":"room_game_1","path":"rooms/room_game_1/room_game_1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
