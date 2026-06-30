@@ -41,7 +41,21 @@ if (_input_x != 0 || _input_y != 0) {
     sprite_index = spr_fox_idle;
 }
 
-// Apply final movement to the player.
+// Apply final movement to the player (+ collisions).
 
+// 1. New Horizontal Collision Block
+if (place_meeting(x + v_x, y, obj_wall)) {
+    while (!place_meeting(x + sign(v_x), y, obj_wall)) {
+        x += sign(v_x);
+    }
+    v_x = 0;
+}
 x += v_x; // shorter version of x/y = x/y + v_x/y (or teleport x/y coord = current x/y coord + v_x/y).
+
+if (place_meeting(x, y + v_y, obj_wall)) {
+    while (!place_meeting(x, y + sign(v_y), obj_wall)) {
+        y += sign(v_y);
+    }
+    v_y = 0;
+}
 y += v_y; // (eg. when current x/y coord = 100 and v_x/y = 5 then teleport x/y coord = 105)*60 per second.

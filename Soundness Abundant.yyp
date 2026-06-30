@@ -19,10 +19,14 @@
   },
   "name":"Soundness Abundant",
   "resources":[
+    {"id":{"name":"obj_doorway","path":"objects/obj_doorway/obj_doorway.yy",},},
     {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
-    {"id":{"name":"room_game_1","path":"rooms/room_game_1/room_game_1.yy",},},
-    {"id":{"name":"room_home_screen","path":"rooms/room_home_screen/room_home_screen.yy",},},
+    {"id":{"name":"obj_spawn_point","path":"objects/obj_spawn_point/obj_spawn_point.yy",},},
+    {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
+    {"id":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
+    {"id":{"name":"tavern_1_interior","path":"rooms/tavern_1_interior/tavern_1_interior.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
+    {"id":{"name":"spr_doorway","path":"sprites/spr_doorway/spr_doorway.yy",},},
     {"id":{"name":"spr_fox_die","path":"sprites/spr_fox_die/spr_fox_die.yy",},},
     {"id":{"name":"spr_fox_idle","path":"sprites/spr_fox_idle/spr_fox_idle.yy",},},
     {"id":{"name":"spr_fox_jump","path":"sprites/spr_fox_jump/spr_fox_jump.yy",},},
@@ -33,8 +37,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"room_home_screen","path":"rooms/room_home_screen/room_home_screen.yy",},},
-    {"roomId":{"name":"room_game_1","path":"rooms/room_game_1/room_game_1.yy",},},
+    {"roomId":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
+    {"roomId":{"name":"tavern_1_interior","path":"rooms/tavern_1_interior/tavern_1_interior.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
