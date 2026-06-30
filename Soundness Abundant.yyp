@@ -24,7 +24,7 @@
     {"id":{"name":"obj_spawn_point","path":"objects/obj_spawn_point/obj_spawn_point.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
     {"id":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
-    {"id":{"name":"tavern_1_interior","path":"rooms/tavern_1_interior/tavern_1_interior.yy",},},
+    {"id":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
     {"id":{"name":"spr_doorway","path":"sprites/spr_doorway/spr_doorway.yy",},},
     {"id":{"name":"spr_fox_die","path":"sprites/spr_fox_die/spr_fox_die.yy",},},
@@ -38,7 +38,7 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
-    {"roomId":{"name":"tavern_1_interior","path":"rooms/tavern_1_interior/tavern_1_interior.yy",},},
+    {"roomId":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
