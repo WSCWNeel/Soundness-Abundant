@@ -19,10 +19,13 @@
   },
   "name":"Soundness Abundant",
   "resources":[
+    {"id":{"name":"obj_doorway_locked","path":"objects/obj_doorway_locked/obj_doorway_locked.yy",},},
     {"id":{"name":"obj_doorway","path":"objects/obj_doorway/obj_doorway.yy",},},
     {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
+    {"id":{"name":"obj_key","path":"objects/obj_key/obj_key.yy",},},
     {"id":{"name":"obj_spawn_point","path":"objects/obj_spawn_point/obj_spawn_point.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
+    {"id":{"name":"game_1","path":"rooms/game_1/game_1.yy",},},
     {"id":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
     {"id":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
@@ -31,6 +34,7 @@
     {"id":{"name":"spr_fox_idle","path":"sprites/spr_fox_idle/spr_fox_idle.yy",},},
     {"id":{"name":"spr_fox_jump","path":"sprites/spr_fox_jump/spr_fox_jump.yy",},},
     {"id":{"name":"spr_fox_run","path":"sprites/spr_fox_run/spr_fox_run.yy",},},
+    {"id":{"name":"spr_key","path":"sprites/spr_key/spr_key.yy",},},
     {"id":{"name":"spr_title_background","path":"sprites/spr_title_background/spr_title_background.yy",},},
     {"id":{"name":"background_tileset","path":"tilesets/background_tileset/background_tileset.yy",},},
   ],
@@ -39,6 +43,7 @@
   "RoomOrderNodes":[
     {"roomId":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
     {"roomId":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
+    {"roomId":{"name":"game_1","path":"rooms/game_1/game_1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

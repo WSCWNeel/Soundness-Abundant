@@ -1,4 +1,5 @@
 global.target_spawn_id = 0;
+global.player_keys = 0; // Player starts the game with 0 keys
 
 // Loop through every spawn point present in the newly loaded room
 with (obj_spawn_point) {
@@ -9,3 +10,6 @@ with (obj_spawn_point) {
         break;       // Stop searching through other spawn points
     }
 }
+
+// Creates a list of 100 slots, all set to 'false' (uncollected)
+global.collected_keys = array_create(100, false);
