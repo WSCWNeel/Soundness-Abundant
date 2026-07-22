@@ -28,9 +28,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_doorway",
-    "path":"sprites/spr_doorway/spr_doorway.yy",
+    "name":"spr_wall_hitbox",
+    "path":"sprites/spr_wall_hitbox/spr_wall_hitbox.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

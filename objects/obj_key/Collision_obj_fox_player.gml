@@ -1,8 +1,9 @@
-// 1. Mark this specific key ID as true
-global.collected_keys[key_id] = true;
+// obj_key -> Collision with obj_fox_player
 
-// 2. Add to player inventory
-global.player_keys += 1;
+// Save this key's unique ID into our global key dictionary
+global.keys[$ key_id] = true;
 
-// 3. Destroy the key
+// Optional: You can add sound effect code here later!
+
+// Destroy the key so it disappears from the floor
 instance_destroy();

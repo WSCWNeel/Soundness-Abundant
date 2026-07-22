@@ -1,14 +1,15 @@
-// Create Event, everything in this panel will occur only once when the game is created.
+// obj_fox_player -> Create Event
 
-// Map WASD to Arrow Keys (so there's less code overall compared to mapping wasd to arrow keys every time).
+// Destroy any duplicate foxes that spawn when returning to older rooms
+if (instance_number(obj_fox_player) > 1) {
+    instance_destroy();
+    exit; // Stops the rest of the code from running
+}
 
-keyboard_set_map(ord("W"), vk_up);
-keyboard_set_map(ord("S"), vk_down);
-keyboard_set_map(ord("A"), vk_left);
-keyboard_set_map(ord("D"), vk_right);
+// Your other variables stay down here
+move_speed = 4;
+x_speed = 0;
+y_speed = 0;
 
-// The Movement Speed Code.
-
-move_speed = 4; // Maximum distance that can be covered in a second by the player moving (4 pixels/second).
-v_x = 0; // The baseline x axis velocity (since it covers x axis speed and direction).
-v_y= 0; // The baseline y axis velocity (since it covers y axis speed and direction).
+// This controls what the player is currently allowed to do
+state = "active"; // Can be "active", "dead", or "win"
