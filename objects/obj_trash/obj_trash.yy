@@ -1,11 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_wall",
+  "%Name":"obj_trash",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_wall",
+  "name":"obj_trash",
   "overriddenProperties":[],
   "parent":{
     "name":"Soundness Abundant",
@@ -30,9 +32,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_wall_hitbox",
-    "path":"sprites/spr_wall_hitbox/spr_wall_hitbox.yy",
+    "name":"spr_trash",
+    "path":"sprites/spr_trash/spr_trash.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }
