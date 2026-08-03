@@ -1,7 +1,6 @@
 // obj_hud -> Draw GUI Event
 
 // 1. Debug check: Confirm the HUD is alive and rendering
-show_debug_message("HUD is running!");
 
 var _start_x = 20;
 var _start_y = 20;

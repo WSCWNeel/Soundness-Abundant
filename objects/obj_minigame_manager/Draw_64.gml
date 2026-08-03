@@ -1,19 +1,15 @@
-// obj_minigame_manager -> Draw GUI Event
-
 var _gui_w = display_get_gui_width();
 var _gui_h = display_get_gui_height();
 
 // --------------------------------------------------
-// DRAW TUTORIAL OVERLAY
+// TUTORIAL OVERLAY
 // --------------------------------------------------
 if (state == "tutorial") {
-    // Darken background
     draw_set_color(c_black);
     draw_set_alpha(0.75);
     draw_rectangle(0, 0, _gui_w, _gui_h, false);
     draw_set_alpha(1.0);
 
-    // Tutorial Window Box
     var _box_w = 480;
     var _box_h = 240;
     var _box_x = (_gui_w - _box_w) / 2;
@@ -24,7 +20,6 @@ if (state == "tutorial") {
     draw_set_color(c_white);
     draw_rectangle(_box_x, _box_y, _box_x + _box_w, _box_y + _box_h, true);
 
-    // Text Instructions
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
 
@@ -40,13 +35,12 @@ if (state == "tutorial") {
     draw_set_color(c_yellow);
     draw_text(_gui_w / 2, _box_y + 180, "[ Press SPACE or ENTER to Start ]");
 
-    // Reset alignment
     draw_set_color(c_white);
     draw_set_halign(fa_left);
 }
 
 // --------------------------------------------------
-// DRAW GAMEPLAY HUD
+// GAMEPLAY HUD
 // --------------------------------------------------
 if (state == "playing") {
 
@@ -57,11 +51,9 @@ if (state == "playing") {
     var _bar_h = 24;
     var _fill_w = (_bar_w * (fatigue / max_fatigue));
 
-    // Dark Background
     draw_set_color(c_dkgray);
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, false);
 
-    // Color shift based on fatigue level
     var _bar_color = c_green;
     if (fatigue > 50) _bar_color = c_yellow;
     if (fatigue > 80) _bar_color = c_red;
@@ -69,7 +61,6 @@ if (state == "playing") {
     draw_set_color(_bar_color);
     draw_rectangle(_bar_x, _bar_y, _bar_x + _fill_w, _bar_y + _bar_h, false);
 
-    // Border
     draw_set_color(c_white);
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, true);
 
@@ -86,7 +77,7 @@ if (state == "playing") {
     draw_text(_gui_w - 20, 20, "Time: " + string(_seconds_left) + "s");
     draw_set_halign(fa_left);
 
-    // Prompt Indicator when standing in Window Zone (Fixed with with context)
+    // --- WINDOW REST PROMPT ---
     var _at_window = false;
     if (instance_exists(obj_fox_player)) {
         with (obj_fox_player) {
@@ -94,7 +85,7 @@ if (state == "playing") {
         }
     }
 
-    if (_at_window) {
+    if (_at_window && obj_fox_player.state == "active") {
         draw_set_halign(fa_center);
         draw_set_color(c_lime);
         draw_text(_gui_w / 2, 40, "RESTING EYES AT WINDOW...");
@@ -102,21 +93,59 @@ if (state == "playing") {
         draw_set_halign(fa_left);
     }
 
-    // --- WIN OVERLAY (Displays when survived) ---
+    // --------------------------------------------------
+    // WIN OVERLAY
+    // --------------------------------------------------
     if (instance_exists(obj_fox_player) && obj_fox_player.state == "win") {
         draw_set_color(c_black);
-        draw_set_alpha(0.75);
+        draw_set_alpha(0.8);
         draw_rectangle(0, 0, _gui_w, _gui_h, false);
 
         draw_set_alpha(1.0);
-        draw_set_color(c_yellow);
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
 
-        draw_text(_gui_w / 2, (_gui_h / 2) - 20, "YOU SURVIVED!");
-        draw_text(_gui_w / 2, (_gui_h / 2) + 20, "Final Score: " + string(player_score));
+        draw_set_color(c_yellow);
+        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "YOU SURVIVED!");
+        
+        draw_set_color(c_white);
+        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
 
-        // Reset alignment defaults
+        draw_set_color(c_lime);
+        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Play Again ]");
+        
+        draw_set_color(c_orange);
+        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+
+        draw_set_color(c_white);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_top);
+    }
+
+    // --------------------------------------------------
+    // GAME OVER OVERLAY
+    // --------------------------------------------------
+    if (instance_exists(obj_fox_player) && obj_fox_player.state == "dead") {
+        draw_set_color(c_black);
+        draw_set_alpha(0.8);
+        draw_rectangle(0, 0, _gui_w, _gui_h, false);
+
+        draw_set_alpha(1.0);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+
+        draw_set_color(c_red);
+        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "GAME OVER - EYE STRAIN OVERLOAD!");
+
+        draw_set_color(c_white);
+        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
+
+        draw_set_color(c_lime);
+        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Retry ]");
+
+        draw_set_color(c_orange);
+        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+
         draw_set_color(c_white);
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);

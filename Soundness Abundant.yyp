@@ -24,7 +24,6 @@
     {"id":{"name":"fnt_bold","path":"fonts/fnt_bold/fnt_bold.yy",},},
     {"id":{"name":"obj_door","path":"objects/obj_door/obj_door.yy",},},
     {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
-    {"id":{"name":"obj_game_over_manager","path":"objects/obj_game_over_manager/obj_game_over_manager.yy",},},
     {"id":{"name":"obj_key","path":"objects/obj_key/obj_key.yy",},},
     {"id":{"name":"obj_minigame_manager","path":"objects/obj_minigame_manager/obj_minigame_manager.yy",},},
     {"id":{"name":"obj_trash","path":"objects/obj_trash/obj_trash.yy",},},
@@ -34,6 +33,7 @@
     {"id":{"name":"game_1","path":"rooms/game_1/game_1.yy",},},
     {"id":{"name":"home_screen","path":"rooms/home_screen/home_screen.yy",},},
     {"id":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
+    {"id":{"name":"storage_warehouse_2_interior","path":"rooms/storage_warehouse_2_interior/storage_warehouse_2_interior.yy",},},
     {"id":{"name":"spr_background","path":"sprites/spr_background/spr_background.yy",},},
     {"id":{"name":"spr_door_hitbox","path":"sprites/spr_door_hitbox/spr_door_hitbox.yy",},},
     {"id":{"name":"spr_fox_die","path":"sprites/spr_fox_die/spr_fox_die.yy",},},
@@ -53,6 +53,7 @@
     {"roomId":{"name":"storage_warehouse_1_interior","path":"rooms/storage_warehouse_1_interior/storage_warehouse_1_interior.yy",},},
     {"roomId":{"name":"game_1","path":"rooms/game_1/game_1.yy",},},
     {"roomId":{"name":"game_1_over_screen","path":"rooms/game_1_over_screen/game_1_over_screen.yy",},},
+    {"roomId":{"name":"storage_warehouse_2_interior","path":"rooms/storage_warehouse_2_interior/storage_warehouse_2_interior.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
