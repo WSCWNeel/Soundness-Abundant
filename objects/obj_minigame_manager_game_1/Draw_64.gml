@@ -1,13 +1,6 @@
 var _gui_w = display_get_gui_width();
 var _gui_h = display_get_gui_height();
 
-// Add to Draw GUI event for debugging
-draw_set_color(c_red);
-draw_text(20, 140, "Player State: " + string(obj_fox_player.state));
-draw_text(20, 160, "Exact Fatigue: " + string(fatigue));
-draw_text(20, 180, "Trash Count: " + string(instance_number(obj_trash)));
-draw_set_color(c_white);
-
 // --------------------------------------------------
 // TUTORIAL OVERLAY
 // --------------------------------------------------
