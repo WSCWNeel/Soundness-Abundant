@@ -43,8 +43,6 @@ if (state == "playing") {
             _player.state = "win";
             global.final_score = player_score; 
         }
-		
-		show_debug_message("Fatigue: " + string(fatigue) + " | Max Fatigue: " + string(max_fatigue))
 
         // FAIL CONDITION
         if (fatigue >= max_fatigue) {
