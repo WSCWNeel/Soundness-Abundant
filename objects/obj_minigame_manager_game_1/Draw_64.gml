@@ -44,37 +44,44 @@ if (state == "tutorial") {
 // --------------------------------------------------
 if (state == "playing") {
 
-    // --- FATIGUE BAR ---
+    // FATIGUE BAR
     var _bar_x = 20;
     var _bar_y = 60;
     var _bar_w = 220;
     var _bar_h = 24;
     var _fill_w = (_bar_w * (fatigue / max_fatigue));
 
-    draw_set_color(c_dkgray);
+    draw_set_color(make_color_rgb(80, 80, 80)); // Bar background
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, false);
 
-    var _bar_color = c_green;
-    if (fatigue > 50) _bar_color = c_yellow;
-    if (fatigue > 80) _bar_color = c_red;
+    // Dynamic bar fill color (Green -> Yellow -> Red)
+    var _bar_color = make_color_rgb(0, 185, 52); // Green
+    if (fatigue > 50) _bar_color = make_color_rgb(255, 217, 0); // Yellow
+    if (fatigue > 80) _bar_color = make_color_rgb(185, 0, 0);   // Red
 
     draw_set_color(_bar_color);
     draw_rectangle(_bar_x, _bar_y, _bar_x + _fill_w, _bar_y + _bar_h, false);
 
-    draw_set_color(c_white);
+    draw_set_color(make_color_rgb(71, 50, 75)); // Border Rectangle
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, true);
 
     if (variable_global_exists("fnt_bold") && font_exists(fnt_bold)) {
         draw_set_font(fnt_bold);
     }
+    
+    // EYE STRAIN LABEL COLOR
+    draw_set_color(make_color_rgb(71, 50, 75)); // Text
     draw_text(_bar_x, _bar_y - 25, "Eye Strain: " + string(ceil(fatigue)) + "%");
 
-    // --- SCORE & TIMER ---
+    // SCORE TEXT COLOR
+    draw_set_color(make_color_rgb(71, 50, 75)); // Text
     draw_text(20, 95, "Score: " + string(player_score));
 
+    // TIMER TEXT COLOR (Aligned to match Eye Strain height)
     var _seconds_left = max(0, ceil(timer / 60));
     draw_set_halign(fa_right);
-    draw_text(_gui_w - 20, 20, "Time: " + string(_seconds_left) + "s");
+    draw_set_color(make_color_rgb(71, 50, 75)); // Text
+    draw_text(_gui_w - 20, _bar_y - 25, "Time: " + string(_seconds_left) + "s");
     draw_set_halign(fa_left);
 
     // --- WINDOW REST PROMPT ---
@@ -87,67 +94,67 @@ if (state == "playing") {
 
     if (_at_window && obj_fox_player.state == "active") {
         draw_set_halign(fa_center);
-        draw_set_color(c_lime);
+        draw_set_color(make_color_rgb(0, 255, 0)); // Lime text
         draw_text(_gui_w / 2, 40, "RESTING EYES AT WINDOW...");
-        draw_set_color(c_white);
+        draw_set_color(make_color_rgb(255, 255, 255));
         draw_set_halign(fa_left);
     }
+}
 
-    // --------------------------------------------------
-    // WIN OVERLAY
-    // --------------------------------------------------
-    if (instance_exists(obj_fox_player) && obj_fox_player.state == "win") {
-        draw_set_color(c_black);
-        draw_set_alpha(0.8);
-        draw_rectangle(0, 0, _gui_w, _gui_h, false);
+// --------------------------------------------------
+// WIN OVERLAY
+// --------------------------------------------------
+if (instance_exists(obj_fox_player) && obj_fox_player.state == "win") {
+    draw_set_color(c_black);
+    draw_set_alpha(0.8);
+    draw_rectangle(0, 0, _gui_w, _gui_h, false);
 
-        draw_set_alpha(1.0);
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_middle);
+    draw_set_alpha(1.0);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
 
-        draw_set_color(c_yellow);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "YOU SURVIVED!");
-        
-        draw_set_color(c_white);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
+    draw_set_color(c_yellow);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 50, "YOU SURVIVED!");
 
-        draw_set_color(c_lime);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Play Again ]");
-        
-        draw_set_color(c_orange);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+    draw_set_color(c_white);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
 
-        draw_set_color(c_white);
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-    }
+    draw_set_color(c_lime);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Play Again ]");
 
-    // --------------------------------------------------
-    // GAME OVER OVERLAY
-    // --------------------------------------------------
-    if (instance_exists(obj_fox_player) && obj_fox_player.state == "dead") {
-        draw_set_color(c_black);
-        draw_set_alpha(0.8);
-        draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    draw_set_color(c_orange);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
 
-        draw_set_alpha(1.0);
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_middle);
+    draw_set_color(c_white);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
 
-        draw_set_color(c_red);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "GAME OVER - EYE STRAIN OVERLOAD!");
+// --------------------------------------------------
+// GAME OVER OVERLAY
+// --------------------------------------------------
+if (instance_exists(obj_fox_player) && obj_fox_player.state == "dead") {
+    draw_set_color(c_black);
+    draw_set_alpha(0.8);
+    draw_rectangle(0, 0, _gui_w, _gui_h, false);
 
-        draw_set_color(c_white);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
+    draw_set_alpha(1.0);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
 
-        draw_set_color(c_lime);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Retry ]");
+    draw_set_color(c_red);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 50, "GAME OVER - EYE STRAIN OVERLOAD!");
 
-        draw_set_color(c_orange);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+    draw_set_color(c_white);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
 
-        draw_set_color(c_white);
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-    }
+    draw_set_color(c_lime);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Retry ]");
+
+    draw_set_color(c_orange);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+
+    draw_set_color(c_white);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
 }

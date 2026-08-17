@@ -22,7 +22,9 @@
   "name":"Soundness Abundant",
   "resources":[
     {"id":{"name":"fnt_bold","path":"fonts/fnt_bold/fnt_bold.yy",},},
+    {"id":{"name":"obj_barrel","path":"objects/obj_barrel/obj_barrel.yy",},},
     {"id":{"name":"obj_door","path":"objects/obj_door/obj_door.yy",},},
+    {"id":{"name":"obj_dropoff_zone","path":"objects/obj_dropoff_zone/obj_dropoff_zone.yy",},},
     {"id":{"name":"obj_fox_player","path":"objects/obj_fox_player/obj_fox_player.yy",},},
     {"id":{"name":"obj_key","path":"objects/obj_key/obj_key.yy",},},
     {"id":{"name":"obj_minigame_manager_game_1","path":"objects/obj_minigame_manager_game_1/obj_minigame_manager_game_1.yy",},},

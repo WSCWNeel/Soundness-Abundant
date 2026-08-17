@@ -1,122 +1,95 @@
-if (!instance_exists(obj_fox_player)) exit;
+// obj_minigame_manager_game_2 - Step Event
 
-var _player = obj_fox_player;
-
-// --------------------------------------------------
-// STATE: TUTORIAL
-// --------------------------------------------------
+// --- TUTORIAL STATE ---
 if (state == "tutorial") {
-    _player.x_speed = 0;
-    _player.y_speed = 0;
-
-    // Press SPACE or ENTER to start
     if (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter)) {
-        state = "playing";
-        _player.state = "active";
+        state = "work";
+        phase_timer = 50 * 60;
     }
+    exit;
 }
 
-// --------------------------------------------------
-// STATE: PLAYING
-// --------------------------------------------------
-if (state == "playing") {
-
-    if (_player.state == "active") {
-
-        // 1. WINDOW REST ZONE CHECK
-        var _at_window = false;
-        with (_player) {
-            _at_window = place_meeting(x, y, obj_window_zone);
-        }
-
-        if (_at_window) {
-            fatigue = max(0, fatigue - rest_rate);
-        } else {
-            fatigue += fatigue_rate;
-        }
-
-        // 2. SURVIVAL TIMER
-        timer--;
-
-        // WIN CONDITION
-        if (timer <= 0) {
-            _player.state = "win";
-            global.final_score = player_score; 
-        }
-
-        // FAIL CONDITION
-        if (fatigue >= max_fatigue) {
-            fatigue = max_fatigue;
-            _player.state = "dead";
-            global.final_score = player_score;
-        }
-
-        // 3. TRASH SPAWNER WITH WALL CLEARANCE
-        spawn_timer++;
-        if (spawn_timer >= spawn_interval) {
-            spawn_timer = 0;
-
-            var _margin = 32; 
-            var _min_x = _margin;
-            var _max_x = room_width - _margin;
-            var _spawn_y = 48;
-
-            var _found_spot = false;
-            var _spawn_x = 0;
-            var _attempts = 0;
-
-            while (!_found_spot && _attempts < 15) {
-                _spawn_x = irandom_range(_min_x, _max_x);
-                
-                if (!position_meeting(_spawn_x, _spawn_y, obj_wall) && 
-                    !position_meeting(_spawn_x - 16, _spawn_y, obj_wall) && 
-                    !position_meeting(_spawn_x + 16, _spawn_y, obj_wall)) {
-                    _found_spot = true;
-                }
-                _attempts++;
-            }
-
-            if (_found_spot) {
-                instance_create_layer(_spawn_x, _spawn_y, "Instances", obj_trash);
-            }
-        }
-    }
-    
-// --------------------------------------------------
-// RESTART / EXIT INPUTS (Active on Win or Game Over)
-// --------------------------------------------------
-if (_player.state == "win" || _player.state == "dead") {
-    
-    // Freeze player movement on game end
-    _player.x_speed = 0;
-    _player.y_speed = 0;
-
-    // Press 'R' to Restart the Minigame
+// --- WIN & GAME OVER NAVIGATION ---
+if (state == "win" || state == "dead") {
     if (keyboard_check_pressed(ord("R"))) {
-        with (_player) {
-            state = "active";
-            x_speed = 0;
-            y_speed = 0;
-            image_speed = 1;
-        }
         room_restart();
     }
-
-    // Press 'ESC' to Exit to Home Screen
     if (keyboard_check_pressed(vk_escape)) {
-        global.target_x = 316; 
-        global.target_y = 420; 
-        
-        with (_player) {
-            state = "active";
-            x_speed = 0;
-            y_speed = 0;
-            image_speed = 1;
-        }
-
+        global.target_x = 320;
+        global.target_y = 480;
         if (room_exists(home_screen)) {
             room_goto(home_screen);
         }
-	 }
-	}
+    }
+    exit;
+}
+
+// --- MASTER TIMER & PROGRESSIVE DIFFICULTY ---
+total_game_timer--;
+if (total_game_timer <= 0) {
+    state = "win";
+    if (instance_exists(obj_fox_player)) obj_fox_player.state = "win";
+    exit;
+}
+
+// Accelerate spawn rate as total game time progresses
+var _progress = 1 - (total_game_timer / (120 * 60));
+current_spawn_interval = max(min_spawn_interval, base_spawn_interval - (_progress * 80));
+
+// --- WORK PHASE (50 Seconds) ---
+if (state == "work") {
+    phase_timer--;
+    
+    // Barrel Spawning
+    spawn_timer++;
+    if (spawn_timer >= current_spawn_interval) {
+        spawn_timer = 0;
+        var _sx = random_range(100, 540);
+        var _sy = random_range(100, 380);
+        instance_create_layer(_sx, _sy, "Instances", obj_barrel);
+    }
+    
+    // Transition to Rest Phase
+    if (phase_timer <= 0) {
+        state = "rest";
+        phase_timer = 10 * 60;
+        rest_grace_timer = 5 * 60;
+    }
+}
+
+// --- REST PHASE (10 Seconds) ---
+if (state == "rest") {
+    phase_timer--;
+    
+    if (rest_grace_timer > 0) {
+        rest_grace_timer--;
+    } else {
+        // After 5s grace window, check if player moves or interacts
+        var _moving = false;
+        if (keyboard_check(ord("W")) || keyboard_check(ord("A")) || 
+            keyboard_check(ord("S")) || keyboard_check(ord("D")) ||
+            keyboard_check(vk_up) || keyboard_check(vk_left) ||
+            keyboard_check(vk_down) || keyboard_check(vk_right)) {
+            _moving = true;
+        }
+        
+        if (instance_exists(obj_fox_player)) {
+            if (abs(obj_fox_player.x_speed) > 0.1 || abs(obj_fox_player.y_speed) > 0.1) {
+                _moving = true;
+            }
+        }
+        
+        // Trigger death if player moves after grace period
+        if (_moving) {
+            state = "dead";
+            if (instance_exists(obj_fox_player)) obj_fox_player.state = "dead";
+            exit;
+        }
+    }
+    
+    // Transition back to Work Phase
+    if (phase_timer <= 0) {
+        state = "work";
+        phase_timer = 50 * 60;
+    }
 }

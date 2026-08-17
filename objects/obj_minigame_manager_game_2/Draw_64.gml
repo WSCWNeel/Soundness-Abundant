@@ -1,9 +1,8 @@
+// obj_minigame_manager_game_2 - Draw GUI Event
 var _gui_w = display_get_gui_width();
 var _gui_h = display_get_gui_height();
 
-// --------------------------------------------------
-// TUTORIAL OVERLAY
-// --------------------------------------------------
+// --- TUTORIAL OVERLAY ---
 if (state == "tutorial") {
     draw_set_color(c_black);
     draw_set_alpha(0.75);
@@ -11,7 +10,7 @@ if (state == "tutorial") {
     draw_set_alpha(1.0);
 
     var _box_w = 480;
-    var _box_h = 240;
+    var _box_h = 260;
     var _box_x = (_gui_w - _box_w) / 2;
     var _box_y = (_gui_h - _box_h) / 2;
 
@@ -23,131 +22,100 @@ if (state == "tutorial") {
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
 
-    if (variable_global_exists("fnt_bold") && font_exists(fnt_bold)) {
-        draw_set_font(fnt_bold);
-    }
-
-    draw_text(_gui_w / 2, _box_y + 20, "--- HOW TO PLAY ---");
-    draw_text(_gui_w / 2, _box_y + 60, "1. Collect trash from the floor for points.");
-    draw_text(_gui_w / 2, _box_y + 90, "2. Walk up to the Windows to lower Eye Strain.");
-    draw_text(_gui_w / 2, _box_y + 120, "3. Survive 60s without reaching 100% Eye Strain!");
+    draw_text(_gui_w / 2, _box_y + 15, "--- 50:10 RULE WORKPLACE HYGIENE ---");
+    draw_text(_gui_w / 2, _box_y + 50, "1. Pick up barrels and match them to drop zones (+50 pts).");
+    draw_text(_gui_w / 2, _box_y + 80, "2. WORK PHASE (50s): Keep dropping barrels efficiently.");
+    draw_text(_gui_w / 2, _box_y + 110, "3. REST PHASE (10s): STOP MOVING after 5s or you fail!");
+    draw_text(_gui_w / 2, _box_y + 140, "4. Survive the full 2-minute work shift.");
 
     draw_set_color(c_yellow);
-    draw_text(_gui_w / 2, _box_y + 180, "[ Press SPACE or ENTER to Start ]");
+    draw_text(_gui_w / 2, _box_y + 200, "[ Press SPACE or ENTER to Start ]");
 
     draw_set_color(c_white);
     draw_set_halign(fa_left);
+    exit;
 }
 
-// --------------------------------------------------
-// GAMEPLAY HUD
-// --------------------------------------------------
-if (state == "playing") {
-
-    // --- FATIGUE BAR ---
-    var _bar_x = 20;
-    var _bar_y = 60;
-    var _bar_w = 220;
-    var _bar_h = 24;
-    var _fill_w = (_bar_w * (fatigue / max_fatigue));
-
-    draw_set_color(c_dkgray);
-    draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, false);
-
-    var _bar_color = c_green;
-    if (fatigue > 50) _bar_color = c_yellow;
-    if (fatigue > 80) _bar_color = c_red;
-
-    draw_set_color(_bar_color);
-    draw_rectangle(_bar_x, _bar_y, _bar_x + _fill_w, _bar_y + _bar_h, false);
-
+// --- GAMEPLAY HUD ---
+if (state == "work" || state == "rest") {
     draw_set_color(c_white);
-    draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, true);
-
-    if (variable_global_exists("fnt_bold") && font_exists(fnt_bold)) {
-        draw_set_font(fnt_bold);
-    }
-    draw_text(_bar_x, _bar_y - 25, "Eye Strain: " + string(ceil(fatigue)) + "%");
-
-    // --- SCORE & TIMER ---
-    draw_text(20, 95, "Score: " + string(player_score));
-
-    var _seconds_left = max(0, ceil(timer / 60));
-    draw_set_halign(fa_right);
-    draw_text(_gui_w - 20, 20, "Time: " + string(_seconds_left) + "s");
     draw_set_halign(fa_left);
+    
+    // Top HUD Info
+    var _sec_left = max(0, ceil(total_game_timer / 60));
+    draw_text(20, 20, "Time: " + string(_sec_left) + "s");
+    draw_text(20, 45, "Score: " + string(player_score));
 
-    // --- WINDOW REST PROMPT ---
-    var _at_window = false;
-    if (instance_exists(obj_fox_player)) {
-        with (obj_fox_player) {
-            _at_window = place_meeting(x, y, obj_window_zone);
+    // Phase Banner
+    draw_set_halign(fa_center);
+    if (state == "work") {
+        var _p_sec = ceil(phase_timer / 60);
+        draw_set_color(c_lime);
+        draw_text(_gui_w / 2, 20, "WORK PHASE: " + string(_p_sec) + "s");
+    } else if (state == "rest") {
+        var _p_sec = ceil(phase_timer / 60);
+        draw_set_color(c_orange);
+        draw_text(_gui_w / 2, 20, "REST PHASE: " + string(_p_sec) + "s");
+        
+        if (rest_grace_timer > 0) {
+            var _g_sec = ceil(rest_grace_timer / 60);
+            draw_set_color(c_yellow);
+            draw_text(_gui_w / 2, 50, "STOP MOVING IN: " + string(_g_sec) + "s");
+        } else {
+            draw_set_color(c_red);
+            draw_text(_gui_w / 2, 50, "HOLD STILL! DO NOT MOVE!");
         }
     }
+    draw_set_halign(fa_left);
+    draw_set_color(c_white);
+}
 
-    if (_at_window && obj_fox_player.state == "active") {
-        draw_set_halign(fa_center);
-        draw_set_color(c_lime);
-        draw_text(_gui_w / 2, 40, "RESTING EYES AT WINDOW...");
-        draw_set_color(c_white);
-        draw_set_halign(fa_left);
-    }
+// --- WIN OVERLAY ---
+if (state == "win") {
+    draw_set_color(c_black);
+    draw_set_alpha(0.8);
+    draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    draw_set_alpha(1.0);
 
-    // --------------------------------------------------
-    // WIN OVERLAY
-    // --------------------------------------------------
-    if (instance_exists(obj_fox_player) && obj_fox_player.state == "win") {
-        draw_set_color(c_black);
-        draw_set_alpha(0.8);
-        draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
 
-        draw_set_alpha(1.0);
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_middle);
+    draw_set_color(c_yellow);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 50, "SHIFT COMPLETED!");
+    draw_set_color(c_white);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
 
-        draw_set_color(c_yellow);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "YOU SURVIVED!");
-        
-        draw_set_color(c_white);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
+    draw_set_color(c_lime);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Play Again ]");
+    draw_set_color(c_orange);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
 
-        draw_set_color(c_lime);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Play Again ]");
-        
-        draw_set_color(c_orange);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    draw_set_color(c_white);
+}
 
-        draw_set_color(c_white);
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-    }
+// --- GAME OVER OVERLAY ---
+if (state == "dead") {
+    draw_set_color(c_black);
+    draw_set_alpha(0.8);
+    draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    draw_set_alpha(1.0);
 
-    // --------------------------------------------------
-    // GAME OVER OVERLAY
-    // --------------------------------------------------
-    if (instance_exists(obj_fox_player) && obj_fox_player.state == "dead") {
-        draw_set_color(c_black);
-        draw_set_alpha(0.8);
-        draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
 
-        draw_set_alpha(1.0);
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_middle);
+    draw_set_color(c_red);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 50, "BURNOUT! FAILED TO REST!");
+    draw_set_color(c_white);
+    draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
 
-        draw_set_color(c_red);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 50, "GAME OVER - EYE STRAIN OVERLOAD!");
+    draw_set_color(c_lime);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Retry ]");
+    draw_set_color(c_orange);
+    draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
 
-        draw_set_color(c_white);
-        draw_text(_gui_w / 2, (_gui_h / 2) - 10, "Final Score: " + string(player_score));
-
-        draw_set_color(c_lime);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 40, "[ Press 'R' to Retry ]");
-
-        draw_set_color(c_orange);
-        draw_text(_gui_w / 2, (_gui_h / 2) + 70, "[ Press 'ESC' to Exit to Home ]");
-
-        draw_set_color(c_white);
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-    }
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    draw_set_color(c_white);
 }
