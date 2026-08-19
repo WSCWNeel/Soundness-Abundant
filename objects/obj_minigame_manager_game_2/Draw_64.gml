@@ -9,7 +9,7 @@ if (state == "tutorial") {
     draw_rectangle(0, 0, _gui_w, _gui_h, false);
     draw_set_alpha(1.0);
 
-    var _box_w = 480;
+    var _box_w = 530;
     var _box_h = 260;
     var _box_x = (_gui_w - _box_w) / 2;
     var _box_y = (_gui_h - _box_h) / 2;
@@ -23,9 +23,9 @@ if (state == "tutorial") {
     draw_set_valign(fa_top);
 
     draw_text(_gui_w / 2, _box_y + 15, "--- 50:10 RULE WORKPLACE HYGIENE ---");
-    draw_text(_gui_w / 2, _box_y + 50, "1. Pick up barrels and match them to drop zones (+50 pts).");
-    draw_text(_gui_w / 2, _box_y + 80, "2. WORK PHASE (50s): Keep dropping barrels efficiently.");
-    draw_text(_gui_w / 2, _box_y + 110, "3. REST PHASE (10s): STOP MOVING after 5s or you fail!");
+    draw_text(_gui_w / 2, _box_y + 50, "1. Pick up barrels and drop them at their drop zones.");
+    draw_text(_gui_w / 2, _box_y + 80, "2. WORK PHASE (50s): Drop barrels and earn points.");
+    draw_text(_gui_w / 2, _box_y + 110, "3. REST PHASE (10s): Rest, you get 5s before you die!");
     draw_text(_gui_w / 2, _box_y + 140, "4. Survive the full 2-minute work shift.");
 
     draw_set_color(c_yellow);

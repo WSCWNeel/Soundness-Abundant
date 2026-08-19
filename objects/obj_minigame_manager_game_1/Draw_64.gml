@@ -29,7 +29,7 @@ if (state == "tutorial") {
 
     draw_text(_gui_w / 2, _box_y + 20, "--- HOW TO PLAY ---");
     draw_text(_gui_w / 2, _box_y + 60, "1. Collect trash from the floor for points.");
-    draw_text(_gui_w / 2, _box_y + 90, "2. Walk up to the Windows to lower Eye Strain.");
+    draw_text(_gui_w / 2, _box_y + 90, "2. Walk up to the Windows above to lower Eye Strain.");
     draw_text(_gui_w / 2, _box_y + 120, "3. Survive 60s without reaching 100% Eye Strain!");
 
     draw_set_color(c_yellow);

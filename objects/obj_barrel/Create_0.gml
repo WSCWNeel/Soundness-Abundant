@@ -1,10 +1,16 @@
 // obj_barrel - Create Event
-color_type = irandom(2); // 0 = Orange, 1 = Teal, 2 = Purple
 is_held = false;
+color_type = irandom(2); // 0 = Orange, 1 = Teal, 2 = Purple
 
-// Set visual sprite sub-image or color blend based on color_type
+// Swap sprite index directly based on color_type
 switch (color_type) {
-    case 0: image_blend = c_orange; break;
-    case 1: image_blend = c_aqua; break;
-    case 2: image_blend = c_purple; break;
+    case 0: 
+        if (sprite_exists(spr_orange_barrel)) sprite_index = spr_orange_barrel; 
+        break;
+    case 1: 
+        if (sprite_exists(spr_teal_barrel)) sprite_index = spr_teal_barrel; 
+        break;
+    case 2: 
+        if (sprite_exists(spr_purple_barrel)) sprite_index = spr_purple_barrel; 
+        break;
 }
