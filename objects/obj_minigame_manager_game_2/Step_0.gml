@@ -40,12 +40,13 @@ current_spawn_interval = max(min_spawn_interval, base_spawn_interval - (_progres
 if (state == "work") {
     phase_timer--;
     
-    // Barrel Spawning
+    // Barrel Spawning (Scales to active room size)
     spawn_timer++;
     if (spawn_timer >= current_spawn_interval) {
         spawn_timer = 0;
-        var _sx = random_range(100, 540);
-        var _sy = random_range(100, 380);
+        var _pad = 64;
+        var _sx = random_range(_pad, room_width - _pad);
+        var _sy = random_range(_pad, room_height - _pad);
         instance_create_layer(_sx, _sy, "Instances", obj_barrel);
     }
     
