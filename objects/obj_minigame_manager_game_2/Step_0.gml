@@ -9,38 +9,25 @@ if (state == "tutorial") {
     exit;
 }
 
-// --- WIN & GAME OVER NAVIGATION ---
-if (state == "win" || state == "dead") {
-    if (keyboard_check_pressed(ord("R"))) {
-        room_restart();
-    }
-    if (keyboard_check_pressed(vk_escape)) {
-        global.target_x = 320;
-        global.target_y = 480;
-        if (room_exists(home_screen)) {
-            room_goto(home_screen);
-        }
-    }
-    exit;
-}
-
 // --- MASTER TIMER & PROGRESSIVE DIFFICULTY ---
-total_game_timer--;
-if (total_game_timer <= 0) {
-    state = "win";
-    if (instance_exists(obj_fox_player)) obj_fox_player.state = "win";
-    exit;
-}
+if (state == "work" || state == "rest") {
+    total_game_timer--;
+    if (total_game_timer <= 0) {
+        state = "win";
+        if (instance_exists(obj_fox_player)) obj_fox_player.state = "win";
+        exit;
+    }
 
-// Accelerate spawn rate as total game time progresses
-var _progress = 1 - (total_game_timer / (120 * 60));
-current_spawn_interval = max(min_spawn_interval, base_spawn_interval - (_progress * 80));
+    // Accelerate spawn rate as total game time progresses
+    var _progress = 1 - (total_game_timer / (120 * 60));
+    current_spawn_interval = max(min_spawn_interval, base_spawn_interval - (_progress * 80));
+}
 
 // --- WORK PHASE (50 Seconds) ---
 if (state == "work") {
     phase_timer--;
     
-    // Barrel Spawning (Scales to active room size)
+    // Barrel Spawning (Scales cleanly across active room width and height)
     spawn_timer++;
     if (spawn_timer >= current_spawn_interval) {
         spawn_timer = 0;
@@ -65,7 +52,7 @@ if (state == "rest") {
     if (rest_grace_timer > 0) {
         rest_grace_timer--;
     } else {
-        // After 5s grace window, check if player moves or interacts
+        // After 5s grace window, check if player attempts any movement
         var _moving = false;
         if (keyboard_check(ord("W")) || keyboard_check(ord("A")) || 
             keyboard_check(ord("S")) || keyboard_check(ord("D")) ||
@@ -80,7 +67,7 @@ if (state == "rest") {
             }
         }
         
-        // Trigger death if player moves after grace period
+        // Trigger burnout failure if player moves after grace window
         if (_moving) {
             state = "dead";
             if (instance_exists(obj_fox_player)) obj_fox_player.state = "dead";
@@ -92,5 +79,49 @@ if (state == "rest") {
     if (phase_timer <= 0) {
         state = "work";
         phase_timer = 50 * 60;
+    }
+}
+
+// --------------------------------------------------
+// RESTART / EXIT INPUTS (Active on Win or Game Over)
+// --------------------------------------------------
+if (state == "win" || state == "dead") {
+
+    // Freeze player movement on game end
+    if (instance_exists(obj_fox_player)) {
+        obj_fox_player.x_speed = 0;
+        obj_fox_player.y_speed = 0;
+    }
+
+    // Press 'R' to Restart the Minigame
+    if (keyboard_check_pressed(ord("R"))) {
+        if (instance_exists(obj_fox_player)) {
+            with (obj_fox_player) {
+                state = "active";
+                x_speed = 0;
+                y_speed = 0;
+                image_speed = 1;
+            }
+        }
+        room_restart();
+    }
+
+    // Press 'ESC' to Exit to Home Screen
+    if (keyboard_check_pressed(vk_escape)) {
+        global.target_x = 316;
+        global.target_y = 420;
+
+        if (instance_exists(obj_fox_player)) {
+            with (obj_fox_player) {
+                state = "active";
+                x_speed = 0;
+                y_speed = 0;
+                image_speed = 1;
+            }
+        }
+
+        if (room_exists(home_screen)) {
+            room_goto(home_screen);
+        }
     }
 }

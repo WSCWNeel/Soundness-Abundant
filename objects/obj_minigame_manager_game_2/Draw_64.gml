@@ -26,7 +26,8 @@ if (state == "tutorial") {
     draw_text(_gui_w / 2, _box_y + 50, "1. Pick up barrels and drop them at their drop zones.");
     draw_text(_gui_w / 2, _box_y + 80, "2. WORK PHASE (50s): Drop barrels and earn points.");
     draw_text(_gui_w / 2, _box_y + 110, "3. REST PHASE (10s): Rest, you get 5s before you die!");
-    draw_text(_gui_w / 2, _box_y + 140, "4. Survive the full 2-minute work shift.");
+    draw_text(_gui_w / 2, _box_y + 140, "4. Remember, 9's the limit (You can't pick up anymore).");
+	draw_text(_gui_w / 2, _box_y + 170, "5. Survive the full 2-minute work shift.");
 
     draw_set_color(c_yellow);
     draw_text(_gui_w / 2, _box_y + 200, "[ Press SPACE or ENTER to Start ]");

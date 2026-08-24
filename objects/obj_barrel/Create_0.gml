@@ -14,3 +14,8 @@ switch (color_type) {
         if (sprite_exists(spr_purple_barrel)) sprite_index = spr_purple_barrel; 
         break;
 }
+
+// Add to the bottom of obj_barrel Create Event
+is_spawning = true;
+spawn_offset_y = -64; // Start 64 pixels above target position
+fall_speed = 4;       // Speed of the drop animation
