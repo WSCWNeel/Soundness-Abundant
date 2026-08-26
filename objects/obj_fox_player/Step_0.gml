@@ -13,8 +13,8 @@ if (state == "active") {
     var down  = keyboard_check(vk_down)  || keyboard_check(ord("S"));
     var up    = keyboard_check(vk_up)    || keyboard_check(ord("W"));
 
-    x_speed = (right - left) * move_speed;
-    y_speed = (down - up) * move_speed;
+    x_speed = (right - left) * move_speed * move_speed_modifier;
+	y_speed = (down - up) * move_speed * move_speed_modifier;
 
     // 2. Horizontal Collision (obj_wall)
     if (place_meeting(x + x_speed, y, obj_wall)) {

@@ -120,3 +120,82 @@ if (state == "dead") {
     draw_set_valign(fa_top);
     draw_set_color(c_white);
 }
+
+// --- REST PHASE (10 Seconds) ---
+if (state == "rest") {
+    phase_timer--;
+    
+    if (rest_grace_timer > 0) {
+        rest_grace_timer--;
+        danger_movement_timer = 0; // Reset danger level while safe
+    } else {
+        // After 5s grace window, check for player movement
+        var _moving = false;
+        if (keyboard_check(ord("W")) || keyboard_check(ord("A")) || 
+            keyboard_check(ord("S")) || keyboard_check(ord("D")) ||
+            keyboard_check(vk_up) || keyboard_check(vk_left) ||
+            keyboard_check(vk_down) || keyboard_check(vk_right)) {
+            _moving = true;
+        }
+        
+        if (instance_exists(obj_fox_player)) {
+            if (abs(obj_fox_player.x_speed) > 0.1 || abs(obj_fox_player.y_speed) > 0.1) {
+                _moving = true;
+            }
+        }
+        
+        if (_moving) {
+            // Player is moving during penalty window: increase danger state
+            danger_movement_timer = min(max_danger_time, danger_movement_timer + 1);
+            
+            // Trigger death when danger maxes out (after ~5s of total movement)
+            if (danger_movement_timer >= max_danger_time) {
+                state = "dead";
+                if (instance_exists(obj_fox_player)) obj_fox_player.state = "dead";
+                exit;
+            }
+        } else {
+            // Gradually recover danger level if player stops moving
+            danger_movement_timer = max(0, danger_movement_timer - 2);
+        }
+    }
+    
+    // Apply speed debuff to player based on danger intensity ratio (0.0 to 1.0)
+    var _danger_ratio = danger_movement_timer / max_danger_time;
+    if (instance_exists(obj_fox_player)) {
+        // Debuff speed down to 25% of base speed as danger reaches 100%
+        obj_fox_player.move_speed_modifier = lerp(1.0, 0.25, _danger_ratio);
+    }
+    
+    // Transition back to Work Phase
+    if (phase_timer <= 0) {
+        state = "work";
+        phase_timer = 50 * 60;
+        danger_movement_timer = 0;
+        if (instance_exists(obj_fox_player)) obj_fox_player.move_speed_modifier = 1.0;
+    }
+} else {
+    // Reset speed modifier during work/other phases
+    danger_movement_timer = 0;
+    if (instance_exists(obj_fox_player)) obj_fox_player.move_speed_modifier = 1.0;
+}
+
+// obj_minigame_manager_game_2 - Draw GUI Event
+
+// Draw red vignette tint whenever danger active
+if (danger_movement_timer > 0) {
+    var _danger_ratio = danger_movement_timer / max_danger_time;
+    
+    // Calculate screen width and height safely
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+    
+    // Draw red semi-transparent overlay rectangle across camera screen
+    draw_set_color(c_red);
+    draw_set_alpha(_danger_ratio * 0.5); // Max 50% red tint strength
+    draw_rectangle(0, 0, _gui_w, _gui_h, false);
+    
+    // Reset draw alpha and color so UI elements render normally
+    draw_set_alpha(1.0);
+    draw_set_color(c_white);
+}

@@ -22,6 +22,7 @@
   "name":"Soundness Abundant",
   "resources":[
     {"id":{"name":"fnt_bold","path":"fonts/fnt_bold/fnt_bold.yy",},},
+    {"id":{"name":"obj_barrel_dump_zone","path":"objects/obj_barrel_dump_zone/obj_barrel_dump_zone.yy",},},
     {"id":{"name":"obj_barrel","path":"objects/obj_barrel/obj_barrel.yy",},},
     {"id":{"name":"obj_door","path":"objects/obj_door/obj_door.yy",},},
     {"id":{"name":"obj_dropoff_zone","path":"objects/obj_dropoff_zone/obj_dropoff_zone.yy",},},

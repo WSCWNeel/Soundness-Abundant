@@ -18,3 +18,7 @@ player_score = 0;
 if (instance_exists(obj_fox_player)) {
     obj_fox_player.state = "active";
 }
+
+// Add to obj_minigame_manager_game_2 Create Event
+danger_movement_timer = 0;
+max_danger_time = 5 * 60; // 5 seconds (300 steps at 60fps)

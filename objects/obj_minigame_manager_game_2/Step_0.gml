@@ -18,7 +18,7 @@ if (state == "work" || state == "rest") {
         exit;
     }
 
-    // Accelerate spawn rate as total game time progresses
+    // Accelerate spawn rate as total game time progresses (120 seconds total)
     var _progress = 1 - (total_game_timer / (120 * 60));
     current_spawn_interval = max(min_spawn_interval, base_spawn_interval - (_progress * 80));
 }
@@ -27,7 +27,7 @@ if (state == "work" || state == "rest") {
 if (state == "work") {
     phase_timer--;
     
-    // Barrel Spawning (Scales cleanly across active room width and height)
+    // Spawn barrels periodically
     spawn_timer++;
     if (spawn_timer >= current_spawn_interval) {
         spawn_timer = 0;
@@ -40,20 +40,27 @@ if (state == "work") {
     // Transition to Rest Phase
     if (phase_timer <= 0) {
         state = "rest";
-        phase_timer = 10 * 60;
-        rest_grace_timer = 5 * 60;
+        phase_timer = 10 * 60;        // 10 seconds total rest duration
+        rest_grace_timer = 5 * 60;   // 5 seconds safe grace period
+        danger_movement_timer = 0;
     }
 }
 
 // --- REST PHASE (10 Seconds) ---
 if (state == "rest") {
+    // Single decrement for the 10-second rest phase
     phase_timer--;
     
     if (rest_grace_timer > 0) {
+        // Safe window: count down grace timer without punishing player
         rest_grace_timer--;
+        danger_movement_timer = 0;
+        if (instance_exists(obj_fox_player)) obj_fox_player.move_speed_modifier = 1.0;
     } else {
-        // After 5s grace window, check if player attempts any movement
+        // --- 5s GRACE ENDED: PENALTY WINDOW ACTIVE ---
         var _moving = false;
+        
+        // Key press detection
         if (keyboard_check(ord("W")) || keyboard_check(ord("A")) || 
             keyboard_check(ord("S")) || keyboard_check(ord("D")) ||
             keyboard_check(vk_up) || keyboard_check(vk_left) ||
@@ -61,25 +68,46 @@ if (state == "rest") {
             _moving = true;
         }
         
+        // Velocity detection
         if (instance_exists(obj_fox_player)) {
             if (abs(obj_fox_player.x_speed) > 0.1 || abs(obj_fox_player.y_speed) > 0.1) {
                 _moving = true;
             }
         }
         
-        // Trigger burnout failure if player moves after grace window
         if (_moving) {
-            state = "dead";
-            if (instance_exists(obj_fox_player)) obj_fox_player.state = "dead";
-            exit;
+            // Build up danger timer while moving
+            danger_movement_timer = min(max_danger_time, danger_movement_timer + 1);
+            
+            // Trigger burnout death when danger reaches 100%
+            if (danger_movement_timer >= max_danger_time) {
+                state = "dead";
+                if (instance_exists(obj_fox_player)) obj_fox_player.state = "dead";
+                exit;
+            }
+        } else {
+            // Gradually cool down danger timer when stationary
+            danger_movement_timer = max(0, danger_movement_timer - 2);
+        }
+        
+        // Dynamically apply speed debuff (scaling down to 25% base speed)
+        var _danger_ratio = danger_movement_timer / max_danger_time;
+        if (instance_exists(obj_fox_player)) {
+            obj_fox_player.move_speed_modifier = lerp(1.0, 0.25, _danger_ratio);
         }
     }
     
-    // Transition back to Work Phase
+    // Transition back to Work Phase after full 10s
     if (phase_timer <= 0) {
         state = "work";
         phase_timer = 50 * 60;
+        danger_movement_timer = 0;
+        if (instance_exists(obj_fox_player)) obj_fox_player.move_speed_modifier = 1.0;
     }
+} else if (state != "rest") {
+    // Reset danger and speed modifier outside rest phase
+    danger_movement_timer = 0;
+    if (instance_exists(obj_fox_player)) obj_fox_player.move_speed_modifier = 1.0;
 }
 
 // --------------------------------------------------

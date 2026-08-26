@@ -23,3 +23,5 @@ state = "active";
 
 // Sync the UI canvas to the game window
 display_set_gui_maximize();
+
+move_speed_modifier = 1.0;
